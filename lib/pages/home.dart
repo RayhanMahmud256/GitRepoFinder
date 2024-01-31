@@ -14,9 +14,18 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   @override
-  final String apikey = 'https://api.github.com/search/repositories?q={flutter}{&page,per_page,sort,order}';
-  bool loading = false;
+  int page = 1;
+  bool loading = true;
   List list = [];
+  final scrollController = ScrollController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchdata();
+    scrollController.addListener(_scrolllistener);
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,27 +33,45 @@ class _homeState extends State<home> {
         title: Text('Flutter-Repos'),
         centerTitle: true,
       ),
-      body: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index){
-            final repo = list[index];
-            return ListTile(
-              title: Text(repo['name']),
-              subtitle: Text(repo['full_name']),
-              trailing: Text(repo['id'].toString()),
-            );
-          },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-            final response = await http.get(Uri.parse(apikey));
-            setState(() {
-               final map = jsonDecode(response.body);
-               list = map['items'] as List;
-            });
-          },
-        child: const Icon(Icons.find_in_page),
+      body: Center(
+        child: loading
+            ? CircularProgressIndicator()
+            : list.isEmpty
+                ? Text('Sorry we dont have any data')
+                : ListView.builder(
+                    controller: scrollController,
+                    itemCount: list.length,
+                    itemBuilder: (context, index) {
+                      final repo = list[index];
+                      return ListTile(
+                        title: Text(repo['name']),
+                        subtitle: Text(repo['full_name']),
+                        trailing: Text(repo['id'].toString()),
+                      );
+                    },
+                  ),
       ),
     );
+  }
+
+  Future<void> fetchdata() async {
+    final apikey = 'https://api.github.com/search/repositories?q=topic:ios&per_page=10&page=$page';
+    final response = await http.get(Uri.parse(apikey));
+    if(response.statusCode == 200) {
+      final map = jsonDecode(response.body);
+      setState(() {
+        List ls = map['items'] as List;
+        list = list + ls;
+        loading = false;
+      });
+    }
+  }
+
+  void _scrolllistener() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      page = page + 1;
+      fetchdata();
+    }
   }
 }

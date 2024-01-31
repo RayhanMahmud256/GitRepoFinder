@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gitapihandler/pages/repo_details.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/apimodel.dart';
+import 'package:provider/provider.dart';
+import '../providers/apiprovider.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -20,6 +21,8 @@ class _homeState extends State<home> {
   List list = [];
   final scrollController = ScrollController();
   String topicname = '';
+  String repoorder = 'stargazers_count';
+  int dropdownval = 0;
 
   void initState() {
     // TODO: implement initState
@@ -28,21 +31,24 @@ class _homeState extends State<home> {
   }
 
   Widget build(BuildContext context) {
+    final myProvider = Provider.of<ApiProvider>(context);
+    myProvider.setlist(list);
     return Scaffold(
         appBar: AppBar(
-          title: Text('Github Searcher'),
+          title: const Text('Github Searcher'),
           centerTitle: true,
         ),
         body: Padding(
-          padding: EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              TextField(
+
+          TextField(
                 controller: _reponamecontroller,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: 'Enter the repository name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -56,36 +62,77 @@ class _homeState extends State<home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        list.clear();
-                        topicname = _reponamecontroller.text.trim();
-                        loading = true;
-                        fetchdata();
-                      });
+                  GestureDetector(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        setState(() {
+                          list.clear();
+                          topicname = _reponamecontroller.text.trim();
+                          loading = true;
+                          fetchdata();
+                        });
+                      },
+                      child: const Text('Search'),
+                    ),
+                  ),
+                  DropdownButton(
+                    value: dropdownval,
+                    items: [ //add items in the dropdown
+                      DropdownMenuItem(
+                          child: Text("star_Count"),
+                          value: 0,
+                      ),
+
+                      DropdownMenuItem(
+                        child: Text("updated_at"),
+                        value: 1,
+                      ),
+                    ],
+                    onChanged: (value){ //get value when changed
+                       setState(() {
+                         if(value == 0) repoorder = 'stargazers_count';
+                         else repoorder = 'updated_at';
+                         if(list.isNotEmpty) {
+                           list.clear();
+                           fetchdata();
+                         }
+                       });
                     },
-                    child: const Text('Search'),
                   )
                 ],
               ),
               const SizedBox(
                 height: 20,
               ),
+              if(list.isNotEmpty) Text("Total_Repository Found: " + list.length.toString()),
+              const SizedBox(
+                height: 20,
+              ),
               Expanded(
                   child: loading
-                      ? CircularProgressIndicator()
+                      ? const Center(child: CircularProgressIndicator())
                       : list.isEmpty
-                          ? Center(child: const Text('No data found'))
-                          : ListView.builder(
-                              controller: scrollController,
-                              itemCount: list.length,
-                              itemBuilder: (context, index) {
-                                final repo = list[index];
-                                return ListTile(
-                                  title: Text(repo['name']),
-                                );
-                              }))
+                      ? const Center(child: const Text('No data found'))
+                      : ListView.builder(
+                      controller: scrollController,
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        final repo = list[index];
+                        return ListTile(
+                          title: Text(repo['full_name']),
+                          subtitle: Text("Owner: " + repo['owner']['login']),
+                          trailing: Text('Total_Stars: ' + repo['stargazers_count'].toString()),
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => repo_details(index),
+                              ),
+                            );
+                          },
+                        );
+                      }))
             ],
           ),
         ));
@@ -93,8 +140,7 @@ class _homeState extends State<home> {
 
 
   Future<void> fetchdata() async {
-    final apikey =
-        'https://api.github.com/search/repositories?q=topic:$topicname&per_page=10&page=$page';
+    final apikey = 'https://api.github.com/search/repositories?q=name:$topicname&sort=$repoorder&order=desc&per_page=10';
     final response = await http.get(Uri.parse(apikey));
     if (response.statusCode == 200) {
       final map = jsonDecode(response.body);

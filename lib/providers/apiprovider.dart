@@ -1,11 +1,16 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
-import 'package:gitapihandler/models/apimodel.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiProvider extends ChangeNotifier {
-   static const endpoints = 'https://api.github.com/users/flutter/repos';
 
-   bool isLoading = true;
-   String error = '';
+  List _list = [];
+  List get list => _list;
 
+  void setlist(List list){
+    _list = _list + list;
+    notifyListeners();
+  }
 
 }

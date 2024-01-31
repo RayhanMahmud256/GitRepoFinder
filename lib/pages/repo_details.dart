@@ -15,7 +15,7 @@ class repo_details extends StatelessWidget {
     list = repoProvider.list;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Repository_Details"),
+        title: const Text("Repository_Details"),
         centerTitle: true,
       ),
       body: Padding(

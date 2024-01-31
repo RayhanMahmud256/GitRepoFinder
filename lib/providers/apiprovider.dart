@@ -8,9 +8,22 @@ class ApiProvider extends ChangeNotifier {
   List _list = [];
   List get list => _list;
 
-  void setlist(List list){
-    _list = _list + list;
+  int page = 1;
+  bool loading = false;
+  String topicname = '';
+  String repoorder = 'stargazers_count';
+  int dropdownval = 0;
+
+
+  Future<void> fetchdata() async {
+    final apikey = 'https://api.github.com/search/repositories?q=name:$topicname&sort=$repoorder&order=desc&per_page=10';
+    final response = await http.get(Uri.parse(apikey));
+    if (response.statusCode == 200) {
+      final map = jsonDecode(response.body);
+        List ls = map['items'] as List;
+        _list = _list + ls;
+        loading = false;
+    }
     notifyListeners();
   }
-
 }

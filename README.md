@@ -29,13 +29,20 @@ If user wants to see the details related to a repository, they have to simply cl
 <h2>User Interface</h2>
 <br>
 <div align="center">
-<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="200">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="250">
 </div>
 <div align="center">
-<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/b5ee2a86-b324-432d-9feb-149e35205fdb" width="200">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/b5ee2a86-b324-432d-9feb-149e35205fdb" width="250">
 </div>
-
-
+<div align="center">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/5e6731fe-88d5-45c2-9376-0d29ba6304f2" width="250">
+</div>
+<div align="center">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/26194ae0-42dc-434f-b85c-e65b49fedb6d" width="250">
+</div>
+<div align="center">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/23b0bddd-2614-4576-89d2-57bf012fc90d" width="250">
+</div>
 
 <h2>Results</h2>
 BrainTumor Classifier is a smart app that can help you detect and classify brain tumors like glioma, meningioma, and pituitary based on MRI images. If there is no tumor in the MRI image then it will show a text "No tumor Detected". From the testing, we found a quite good amount of accuracy from this app.

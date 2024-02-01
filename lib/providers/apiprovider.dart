@@ -11,7 +11,7 @@ class ApiProvider extends ChangeNotifier {
   int page = 1;
   bool loading = false;
   String topicname = '';
-  int? dropdownval = 0;
+  int? dropdownval = 3;
   bool starting = true;
 
   //Sort the list by starcount

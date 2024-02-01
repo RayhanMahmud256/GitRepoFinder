@@ -83,6 +83,7 @@ class _homeState extends State<home> {
                     items: const [
                       DropdownMenuItem(
                         child: Text("default"),
+                        value: 3,
                       ),
                       DropdownMenuItem(
                         child: Text("star_Count"),

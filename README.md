@@ -20,13 +20,16 @@ Statemanagement is one of the main features of the gitfinder. To develop this ap
 
 <h2>Working Process</h2>
 At the starting of the application, gitfinder takes a keyword from the user. Then, by clicking on search button.<br>
-<div align="center">
-<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="100">
-</div>
 
 This app find the repositories related to that keyword. Then by simply going down user can get more repositories.<br>
 
 If user wants to see the details related to a repository, they have to simply click on that listtile. It will show related data about the repository.<br>
+
+<h2>User Interface</h2>
+<br>
+<div align="center">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="100">
+</div>
 
 
 <h2>Results</h2>

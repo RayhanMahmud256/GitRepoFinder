@@ -19,7 +19,7 @@ Api_key: https://api.github.com/search/repositories?q=name:flutter&per_page=10
 Statemanagement is one of the main features of the gitfinder. To develop this app, i used provider statemanagement architehture. Which is one of the most used statemanager in flutter.
 
 <h2>Working Process</h2>
-At the starting of the application, gitfinder takes a keyword from the user. Then, by clicking on search button.<br>
+At the starting of the application, gitfinder takes a keyword from the user. Then, by clicking on search button.<br><br>
 
 This app find the repositories related to that keyword. Then by simply going down user can get more repositories.<br>
 

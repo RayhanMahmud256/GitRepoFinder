@@ -25,7 +25,7 @@ If user wants to see the details related to a repository, they have to simply cl
 This app also can sort data by user preference, like if they wanted to see. Which repository was last updated. It will sort all that data for user.
 It also can sort data by starcount.
 
-<h2>User Interface</h2>
+<h2>User Interfaces</h2>
 <br>
 <div align="center">
 <img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="250">

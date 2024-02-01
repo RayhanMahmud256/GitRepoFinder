@@ -18,13 +18,8 @@ class _homeState extends State<home> {
   TextEditingController _reponamecontroller = TextEditingController();
   final scrollController = ScrollController();
 
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-
   Widget build(BuildContext context) {
+    print('Build');
 
     final myProvider = Provider.of<ApiProvider>(context);
     scrollController.addListener(() {
@@ -32,13 +27,12 @@ class _homeState extends State<home> {
           scrollController.position.maxScrollExtent) {
         myProvider.page = myProvider.page + 1;
         myProvider.fetchdata();
-        print(myProvider.list);
       }
     });
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Github Searcher'),
+          title: const Text('GitFinder'),
           centerTitle: true,
         ),
         body: Padding(
@@ -48,8 +42,7 @@ class _homeState extends State<home> {
               const SizedBox(
                 height: 15,
               ),
-
-          TextField(
+              TextField(
                 controller: _reponamecontroller,
                 decoration: const InputDecoration(
                     hintText: 'Enter the repository name',
@@ -71,8 +64,10 @@ class _homeState extends State<home> {
                         FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {
                           myProvider.list.clear();
-                          myProvider.topicname = _reponamecontroller.text.trim();
+                          myProvider.topicname =
+                              _reponamecontroller.text.trim();
                           myProvider.loading = true;
+                          myProvider.starting = false;
                           myProvider.fetchdata();
                         });
                       },
@@ -83,24 +78,25 @@ class _homeState extends State<home> {
                     value: myProvider.dropdownval,
                     items: const [
                       DropdownMenuItem(
-                          child: Text("star_Count"),
-                          value: 0,
+                        child: Text("star_Count"),
+                        value: 0,
                       ),
-
                       DropdownMenuItem(
                         child: Text("updated_at"),
                         value: 1,
                       ),
                     ],
-                    onChanged: (value){
-                       setState(() {
-                         if(value == 0) myProvider.repoorder = 'stargazers_count';
-                         else myProvider.repoorder = 'updated_at';
-                         if(myProvider.list.isNotEmpty) {
-                           myProvider.list.clear();
-                           myProvider.fetchdata();
-                         }
-                       });
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == 0)
+                          myProvider.repoorder = 'stargazers_count';
+                        else
+                          myProvider.repoorder = 'updated_at';
+                        if (myProvider.list.isNotEmpty) {
+                          myProvider.list.clear();
+                          myProvider.fetchdata();
+                        }
+                      });
                     },
                   )
                 ],
@@ -108,34 +104,39 @@ class _homeState extends State<home> {
               const SizedBox(
                 height: 20,
               ),
-              if(myProvider.list.isNotEmpty) Text("Total_Repository Found: " + myProvider.list.length.toString()),
+              if (myProvider.list.isNotEmpty)
+                Text("Total_Repository Found: " +
+                    myProvider.list.length.toString()),
               const SizedBox(
                 height: 20,
               ),
               Expanded(
-                  child: myProvider.loading
+                  child: myProvider.starting? const Center(child: Text('Search your repositories')):myProvider.loading
                       ? const Center(child: CircularProgressIndicator())
                       : myProvider.list.isEmpty
-                      ? const Center(child: const Text('No data found'))
-                      : ListView.builder(
-                      controller: scrollController,
-                      itemCount: myProvider.list.length,
-                      itemBuilder: (context, index) {
-                        final repo = myProvider.list[index];
-                        return ListTile(
-                          title: Text(repo['full_name']),
-                          subtitle: Text("Owner: " + repo['owner']['login']),
-                          trailing: Text('Total_Stars: ' + repo['stargazers_count'].toString()),
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => repo_details(index),
-                              ),
-                            );
-                          },
-                        );
-                      }))
+                          ? const Center(child: Text('No data found'))
+                          : ListView.builder(
+                              controller: scrollController,
+                              itemCount: myProvider.list.length,
+                              itemBuilder: (context, index) {
+                                final repo = myProvider.list[index];
+                                return ListTile(
+                                  title: Text(repo['full_name']),
+                                  subtitle:
+                                      Text("Owner: " + repo['owner']['login']),
+                                  trailing: Text('Total_Stars: ' +
+                                      repo['stargazers_count'].toString()),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            repo_details(index),
+                                      ),
+                                    );
+                                  },
+                                );
+                              })),
             ],
           ),
         ));

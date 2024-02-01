@@ -22,9 +22,8 @@ Statemanagement is one of the main features of the gitfinder. To develop this ap
 At the starting of the application, gitfinder takes a keyword from the user. Then, by clicking on search button.
 This will app find the repositories related to that keyword. Then by simply going down user can get more repositories.
 If user wants to see the details related to a repository, they have to simply click on that listtile. It will show related data about the repository.
-
-<h2>User Interface</h2>
-<br>
+This app also can sort data by user preference, like if they wanted to see. Which repository was last updated. It will sort all that data for user.
+It also can sort data by starcount.
 
 <h2>User Interface</h2>
 <br>
@@ -44,13 +43,9 @@ If user wants to see the details related to a repository, they have to simply cl
 <img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/23b0bddd-2614-4576-89d2-57bf012fc90d" width="250">
 </div>
 
-<h2>Results</h2>
-BrainTumor Classifier is a smart app that can help you detect and classify brain tumors like glioma, meningioma, and pituitary based on MRI images. If there is no tumor in the MRI image then it will show a text "No tumor Detected". From the testing, we found a quite good amount of accuracy from this app.
+<h2>Testing and Results</h2>
+After testing the app, we find out this app can handle the api data easily with consistancy. Also, easily handle the state of datas.
 
-<h2>APK File</h2>
-This app can be useful tool for doctors, patients, and researchers who want to learn more about brain tumors and their characteristics. You can try BrainTumor Classifier for free by visiting the link given below. I hope you will find it helpful and informative.
-https://1drv.ms/f/s!Aj9BfxaFX7Y5jw0_bJWxvuoQ9zjZ?e=f8i1UY
-
-<h2>Warning</h2>
-BrainTumor Classifier is not intended to replace professional medical advice, diagnosis, or treatment. It is only meant to provide a preliminary screening and guidance for brain tumor detection. You should always consult your doctor before making any health-related decisions.
+<h2>Future Work</h2>
+In the future, we can use api to show the users profile along side the repositories.
 

@@ -26,7 +26,7 @@ If user wants to see the details related to a repository, they have to simply cl
 <h2>User Interface</h2>
 <br>
 <div align="center">
-<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="100">
+<img src="https://github.com/RayhanMahmud256/Starcoder-24-flutter-/assets/99743908/9c43782b-3377-41af-a745-3dbb5e592b5c" width="200">
 </div>
 
 

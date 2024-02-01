@@ -1,6 +1,5 @@
 import 'package:isar/isar.dart';
 
-part 'repos.g.dart';
 
 @Collection()
 class repos{

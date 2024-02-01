@@ -19,9 +19,10 @@ class _homeState extends State<home> {
   final scrollController = ScrollController();
 
   Widget build(BuildContext context) {
-    print('Build');
 
     final myProvider = Provider.of<ApiProvider>(context);
+
+    //Implementing pagination to fetch data
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
@@ -42,6 +43,7 @@ class _homeState extends State<home> {
               const SizedBox(
                 height: 15,
               ),
+              //Textfield to get keywords from users
               TextField(
                 controller: _reponamecontroller,
                 decoration: const InputDecoration(
@@ -61,6 +63,7 @@ class _homeState extends State<home> {
                   GestureDetector(
                     child: ElevatedButton(
                       onPressed: () {
+                        //Gesturecontroller to remove keyboard
                         FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {
                           myProvider.list.clear();
@@ -74,9 +77,13 @@ class _homeState extends State<home> {
                       child: const Text('Search'),
                     ),
                   ),
+                  //drop down button for sorting
                   DropdownButton(
                     value: myProvider.dropdownval,
                     items: const [
+                      DropdownMenuItem(
+                        child: Text("default"),
+                      ),
                       DropdownMenuItem(
                         child: Text("star_Count"),
                         value: 0,
@@ -88,14 +95,9 @@ class _homeState extends State<home> {
                     ],
                     onChanged: (value) {
                       setState(() {
-                        if (value == 0)
-                          myProvider.repoorder = 'stargazers_count';
-                        else
-                          myProvider.repoorder = 'updated_at';
-                        if (myProvider.list.isNotEmpty) {
-                          myProvider.list.clear();
-                          myProvider.fetchdata();
-                        }
+                        myProvider.dropdownval = value;
+                        if(value==0) myProvider.sortbystar();
+                        else myProvider.sortbyupdatetime();
                       });
                     },
                   )
@@ -104,6 +106,7 @@ class _homeState extends State<home> {
               const SizedBox(
                 height: 20,
               ),
+              //Find out total repositories in list
               if (myProvider.list.isNotEmpty)
                 Text("Total_Repository Found: " +
                     myProvider.list.length.toString()),

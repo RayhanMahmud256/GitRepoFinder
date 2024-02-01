@@ -20,9 +20,7 @@ Statemanagement is one of the main features of the gitfinder. To develop this ap
 
 <h2>Working Process</h2>
 At the starting of the application, gitfinder takes a keyword from the user. Then, by clicking on search button.
-
 This will app find the repositories related to that keyword. Then by simply going down user can get more repositories.
-
 If user wants to see the details related to a repository, they have to simply click on that listtile. It will show related data about the repository.
 
 <h2>User Interface</h2>
